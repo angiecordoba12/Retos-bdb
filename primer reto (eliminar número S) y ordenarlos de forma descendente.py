@@ -1,27 +1,52 @@
-def procesar_lista(numeros, S):
-    resultado = []  # Lista para almacenar los resultados
+def procesar_numeros(numeros, S):
+    # Inicializa una lista para almacenar el resultado
+    resultado = []
 
-    for numero in numeros:  # Itera sobre cada número en la lista
-        nuevo_numero = ''  # Inicializa una cadena vacía para construir el nuevo número
+    # Recorre cada número en la lista
+    for numero in numeros:
+        # Convierte el número a cadena para procesar dígitos
+        numero_str = str(numero)
         
-        for digito in str(numero):  # Convierte el número en cadena y recorre cada dígito
-            if int(digito) < S:  # Verifica si el dígito es menor que S
-                nuevo_numero += digito  # Si es válido, lo agrega a la cadena nuevo_numero
+        # Inicializa una variable para el nuevo número
+        nuevo_numero = ""
+
+        # Recorre cada dígito del número
+        for digito in numero_str:
+            # Comprueba si el dígito es menor que S
+            if int(digito) < S:
+                nuevo_numero += digito
         
-        if nuevo_numero != '':  # Comprueba si nuevo_numero no está vacío
-            resultado.append(nuevo_numero)  # Agrega el número resultante a la lista como cadena
+        # Si hay un número válido, se agrega a la lista de resultados
+        if nuevo_numero != "":
+            resultado.append(int(nuevo_numero))
 
-    # Invierte la lista de resultados
-    resultado_invertido = resultado[::-1]
+    # Invierte el orden de los números en el resultado
+    resultado_ordenado = []
+    while resultado:
+        maximo = resultado[0]
+        for numero in resultado:
+            # Encuentra el máximo en la lista
+            if numero > maximo:
+                maximo = numero
+        # Agrega el máximo al resultado ordenado
+        resultado_ordenado.append(maximo)
+        resultado.remove(maximo)
+    
+    # Devuelve el resultado ordenado
+    return resultado_ordenado
 
-    # Muestra la lista invertida con números enteros
-    print(f"La lista invertida es: {resultado_invertido}")
 
-# Solicita al usuario que asigne un valor a S
-S = int(input("Asigne un valor a S: "))
+# Solicita el valor de S al usuario
+S = int(input("Ingresa el valor de S: "))
 
-# Solicita al usuario que introduzca los números separados por comas
-numeros = [int(x) for x in input("Introduzca los números separados por comas (ejemplo: 1,2,5): ").split(",")]
+# Solicita la lista de números al usuario
+numeros_input = input("Ingresa la lista de números separados por comas: ")
 
-# Llama la función para procesar la lista
-procesar_lista(numeros, S)
+# Convierte la entrada a una lista de enteros
+numeros = [int(numero) for numero in numeros_input.split(",")]
+
+# Llama a la función con los números ingresados y el valor de S
+resultado_final = procesar_numeros(numeros, S)
+
+# Imprime el resultado en consola
+print("Resultado:", resultado_final)
